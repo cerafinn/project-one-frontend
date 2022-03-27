@@ -8,13 +8,52 @@
 </head>
 <body>
     <!-- nav or header with links? -->
+    <header>
+      <h1> - Reimbursement Portal</h1>
+      <nav>
+        <a href="#" id="logout">Logout</a>
+      </nav>
+    </header>
 
     <!-- new reimbursement button = should it be in header or as a modal? -->
+    <div>
+      <div>
+        <h1>Submit new Reimbursement Request</h1>
+        <div class="reimb-form-input">
+          <div>
+            <label for="reimb-form-amount">Amount: </label>
+            <input type="text" id="reimb-form-amount" placeholder="Enter amount">
+          </div>
+          <div>
+            <label for="reimb-form-description">Description: </label> <br>
+            <textarea id="reimb-form-description"></textarea>
+          </div>
+          
+          <label for="reimb-form-type">Type: </label>
+          <select name="type" id="reimb-form-type">
+            <option selected="true" disabled="disabled">Select from list</option>
+            <option value="lodging">Lodging</option>
+            <option value="travel">Travel</option>
+            <option value="food">Food</option>
+            <option value="other">Other</option>
+
+          <!-- need to have reimb amount, type, description, receipt -->
+        </div>
+        <button type="submit" id="reimb-form">Sumbit</button>
+      </div>
 
   <!-- table with all reimbursements
     
-    what does the table need fo headers?
+    what does the table need for headers?
   -->
-  
+      <div>
+        <h2>Reimbursement History</h2>
+        <table id="e-reimb-table">
+          <thead>
+            <th></th>
+          </thead>
+        </table>
+      </div>
+    </div>
 </body>
 </html>
