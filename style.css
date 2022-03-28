@@ -6,6 +6,99 @@
   --light-bg: #B4E1FF;
 }
 
+body {
+  color: var(--secondary);
+}
+
 header {
+  padding: 20px 35px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 999;
+}
+
+header h1 {
+  font-weight: bold;
+  color: var(--primary);
+  margin: 0;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+header nav ul li a {
+  padding: 10px 15px;
+  font-weight: lighter;
+  font-size: 1.55vw;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+header nav ul li a:hover {
+  background: var(--primary);
+  color: var(--text);
+  border-radius: 15px;
+  text-shadow: none;
+}
+
+.reimbursements {
+  margin: 10px 50px;
+}
+
+.form-input {
+  border: 1px solid var(--secondary-color);
+  display: block;
+  padding: 7px 15px;
+  font-size: 16px;
+  color: var(--light);
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background-color: rgba(255,255,255, 0.75);
+}
+
+.form-input:focus {
+  background-color: rgba(255,255,255, 1);
+  outline: none;
+}
+
+.form-input label {
+  display: block;
+  margin: 0;
+}
+
+.form-input input textarea {
+  display: block;
+  margin: 0 10px 15px 10px;
+}
+
+.form-input textarea {
+  height: 100px;
+  width: 250px;
+}
+
+.form-input select {
+  margin: 0 10px 15px 0;
+}
+
+.form-input input[type="text"] {
+  width: 250px;
+}
+
+.form-input button {
+  margin-top: 10px;
+  background-color: var(--tertiary);
+  color: var(--secondary);
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  float: right;
 }
