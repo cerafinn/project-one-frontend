@@ -1,0 +1,11 @@
+:root {
+  --primary: #729B79;
+  --secondary: #475B63;
+  --tertiary: #AC8887;
+  --text: #2E2C2F;
+  --light-bg: #B4E1FF;
+}
+
+header {
+  display: flex;
+}
