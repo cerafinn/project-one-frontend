@@ -1,4 +1,4 @@
-const URL = `http://localhost:8081/users/${localStorage.getItem('user_id')}/reimbursements`;
+const URL = 'http://localhost:8081/reimbursements';
 
 window.addEventListener('load', (event) => {
   populateTable();
@@ -10,12 +10,12 @@ async function populateTable() {
     headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
   })
 
-  if(res.status === 200) {
+  if (res.status === 200) {
     let reimbursements = await res.json();
-    let tbody = document.createElement('#reimb-table > tbody');
+    let tbody = document.querySelector('#reimb-table > tbody');
     tbody.remove();
 
-    for(let reimbursement of reimbursements) {
+    for (let reimbursement of reimbursements) {
       let tr = document.createElement('tr');
 
       let td1 = document.createElement('td');
@@ -61,6 +61,45 @@ async function populateTable() {
       tr.appendChild(td8);
       tr.appendChild(td9);
       tr.appendChild(td10);
+      
+      let userRole = localStorage.getItem('user_role')
+      
+      if(!reimbursement.managerUsername) {
+        const statusType = ['pending', 'approved', 'denied'];
+        let statusInput = document.createElement('select');
+        statusInput.setAttribute('name', 'status');
+        
+        let statusOptions = document.createElement('option');
+
+        for(let i = 0; i < statusOptions.length; i++) {
+          statuOption.setAttribute('value', `${i + 1}`);
+          statusOption.innerText = statusType[i];
+          statusInput.appendChild(statusOption);
+        }
+
+        let confirmBtn = document.createElement('button');
+        confirmBtn.innerText = 'Confirm';
+
+        confirmBtn.addEventListener('click', async () => {
+          let status = statusOption.value;
+
+          try {
+            let res = await fetch(`${URL}/${reimbursement.id}?status=${status}`, {
+              method: 'PATCH',
+              headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
+            });
+
+            if (res.status === 200) {
+              populateTable();
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        });
+
+        tr.appendChild(statusInput);
+        tr.appendChild(confirmBtn);
+      }
 
       tbody.appendChild(tr);
     }
