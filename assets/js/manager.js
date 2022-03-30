@@ -13,7 +13,7 @@ async function populateTable() {
   if (res.status === 200) {
     let reimbursements = await res.json();
     let tbody = document.querySelector('#reimb-table > tbody');
-    tbody.remove();
+    tbody.innerHTML = '';
 
     for (let reimbursement of reimbursements) {
       let tr = document.createElement('tr');

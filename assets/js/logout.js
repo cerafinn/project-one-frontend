@@ -5,5 +5,5 @@ logoutbtn.addEventListener("click", () => {
   localStorage.removeItem("user_id");
   localStorage.removeItem("jwt");
 
-  window.location = "/index.html"
+  window.location = "./index.html"
 })

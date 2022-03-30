@@ -25,9 +25,9 @@ loginBtn.addEventListener('click', async () => {
     localStorage.setItem('user_role', user.userRole);
 
     if(user.userRole === "employee") {
-      window.location = '/employee.html';
+      window.location = './employee.html';
     } else if(user.userRole === "finance manager") {
-      window.location = '/manager.html';
+      window.location = './manager.html';
     } else {
       let errMsg = await res.text();
       console.log(errMsg);

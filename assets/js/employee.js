@@ -10,59 +10,60 @@ async function populateTable() {
     headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
   })
 
-  if(res.status === 200) {
+  if (res.status === 200) {
     let reimbursements = await res.json();
-    let tbody = document.createElement('#reimb-table > tbody');
-    tbody.remove();
+    let tbody = document.querySelector('#e-reimb-table > tbody');
 
-    for(let reimbursement of reimbursements) {
+    for (let reimbursement of reimbursements) {
       let tr = document.createElement('tr');
 
       let td1 = document.createElement('td');
       td1.innerText = reimbursement.id;
-      
+
       let td2 = document.createElement('td');
       td2.innerText = reimbursement.remitAmount;
-      
+
       // let td3 = document.createElement('td');
-      // let receiptImg = document.createElement('img');
-      // receiptImg.setAttribute('src', `${URL}/${reimbursement.id}/receipt`);
-      // receiptImg.style.height = '100px';
-      // td3.appendChild(receiptImg);
-      
+      // td3.innerText = reimbursement.remitSubmitted;
+
       // let td4 = document.createElement('td');
-      // td4.innerText = reimbursement.remitSubmitted;
-      
-      // let td5 = document.createElement('td');
-      // td5.innerText = reimbursement.remitResolved;
-      
+      // td4.innerText = reimbursement.remitResolved;
+
+      let td5 = document.createElement('td');
+      td5.innerText = reimbursement.remitDescription;
+
       let td6 = document.createElement('td');
-      td6.innerText = reimbursement.remitDescription;
-      
+      td6.innerText = reimbursement.type;
+
       let td7 = document.createElement('td');
-      td7.innerText = reimbursement.type;
+      td7.innerText = (reimbursement.status);
       
       let td8 = document.createElement('td');
-      td8.innerText = (reimbursement.status);
+      td8.innerText = (reimbursement.employeeUsername);
       
-      let td9 = document.createElement('td');
-      td9.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
-      
-      let td10 = document.createElement('td');    
-      td10.innerText = (reimbursement.managerUsername ? (reimbursement.managerFirstName + " " + reimbursement.managerLastName) : "Not reviewed");
+      let td9 = document.createElement('td');    
+      td9.innerText = (reimbursement.managerUsername ? reimbursement.managerUsername : "Not reviewed");
 
       tr.appendChild(td1);
       tr.appendChild(td2);
       // tr.appendChild(td3);
       // tr.appendChild(td4);
-      // tr.appendChild(td5);
+      tr.appendChild(td5);
       tr.appendChild(td6);
       tr.appendChild(td7);
       tr.appendChild(td8);
       tr.appendChild(td9);
-      tr.appendChild(td10);
+
+      // let td10 = document.createElement('td');
+      // let receiptImg = document.createElement('img');
+      // receiptImg.setAttribute('src', `${URL}/${reimbursement.id}/receipt`);
+      // receiptImg.style.height = '100px';
+      // td10.appendChild(receiptImg);
+      // tr.appendChild(td10);
 
       tbody.appendChild(tr);
+
+      console.log(reimbursements[0]);
     }
   }
 }
