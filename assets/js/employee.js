@@ -65,10 +65,10 @@ async function populateTable() {
       td7.innerText = (reimbursement.status);
       
       let td8 = document.createElement('td');
-      td8.innerText = (reimbursement.employeeUsername);
+      td9.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
       
       let td9 = document.createElement('td');    
-      td9.innerText = (reimbursement.managerUsername ? reimbursement.managerUsername : "Not reviewed");
+      td10.innerText = (reimbursement.managerUsername ? (reimbursement.managerFirstName + " " +reimbursement.managerLastName) : "Not reviewed");
 
       tr.appendChild(td1);
       tr.appendChild(td2);
