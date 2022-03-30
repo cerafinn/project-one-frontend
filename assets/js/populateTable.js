@@ -1,10 +1,20 @@
-const URL = 'http://localhost:8081/reimbursements';
+const URL = 'http://localhost:8081';
 
+window.addEventListener('load', (event) => {
+  let userRole = localStorage.getItem('user_role');
+  let uId = localStorage.getItem('user_id');
 
-async function resolveStatus() {
+  if(userRole === 'finance manager'){
+    populateTable(`${URL}/reimbursements`);
+  } else {
+    populateTable(`${URL}/users/${uId}/reimbursements`);
+  }
+});
+
+async function resolveStatus(reimb) {
   const statusType = ['pending', 'approved', 'denied'];
 
-  if(reimbursement.status === 'pending') {
+  if(reimb.status === '1') {
     let statusInput = document.createElement('input');
     statusInput.setAttribute('type', 'select');
 
@@ -26,7 +36,7 @@ async function resolveStatus() {
     let statusVal = statusOption.value;
 
     try {
-      let res = await fetch(`${URL}/${reimb.id}?/status=${statusVal}`, {
+      let res = await fetch(`${URL}/reimbursements/${reimb.id}?/status=${statusVal}`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
       });
@@ -41,8 +51,8 @@ async function resolveStatus() {
 }
 
 
-async function populateTable() {
-  let res = await fetch(URL, {
+async function populateTable(getURL) {
+  let res = await fetch(getURL, {
     method: 'GET',
     headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
   })
@@ -98,8 +108,10 @@ async function populateTable() {
       tr.appendChild(td9);
       tr.appendChild(td10);
       
-      if(!reimb.managerUsername) {
-        resolveStatus();
+      let userRole = localStorage.getItem('user_role')
+      
+      if(!reimb.managerUsername && userRole === 'finance manager') {
+        resolveStatus(reimb);
       }
 
       tbody.appendChild(tr);

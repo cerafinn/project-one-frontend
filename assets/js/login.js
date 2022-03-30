@@ -26,7 +26,7 @@ loginBtn.addEventListener('click', async () => {
 
     if(user.userRole === "employee") {
       window.location = '/employee.html';
-    } else if(user.userRole === "manager") {
+    } else if(user.userRole === "finance manager") {
       window.location = '/manager.html';
     } else {
       let errMsg = await res.text();
