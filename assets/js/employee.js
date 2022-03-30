@@ -4,7 +4,8 @@ window.addEventListener('load', (event) => {
   populateTable();
 });
 
-let submitReimbursement = document.querySelector('reimb-form-submit');
+let submitReimbursement = document.querySelector('#reimb-form-submit');
+
 submitReimbursement.addEventListener('click', async () => {
   let reimbAmount = document.querySelector('#reimb-form-amount');
   let reimbDescription = document.querySelector('#reimb-form-description');
@@ -81,7 +82,7 @@ async function populateTable() {
 
       let td10 = document.createElement('td');
       let receiptImg = document.createElement('img');
-      receiptImg.setAttribute('src', `${URL}/${reimbursement.id}/receipt`);
+      receiptImg.setAttribute('src', `http://localhost:8081/reimbursements/${reimbursement.id}/receipt`);
       receiptImg.style.height = '100px';
       td10.appendChild(receiptImg);
       tr.appendChild(td10);
