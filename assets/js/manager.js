@@ -1,10 +1,27 @@
-const URL = 'http://localhost:8081/reimbursements';
+const prefixURL = 'http://localhost:8081/reimbursements';
+let URL = prefixURL;
 
 window.addEventListener('load', (event) => {
   populateTable();
 });
 
+let filter = document.querySelector('#filter');
+filter.addEventListener('change', (event) => {
+  populateTable();
+});
+
 async function populateTable() {
+  let filterValue = filter.value;
+  console.log(filterValue);
+
+  if (filterValue == 0) {
+    URL = prefixURL;
+  } else if (filterValue !== 0) {
+    URL = prefixURL + '?status=' + filterValue;
+  } else {
+    URL = prefixURL;
+  }
+
   let res = await fetch(URL, {
     method: 'GET',
     headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
@@ -26,15 +43,15 @@ async function populateTable() {
       
       let td3 = document.createElement('td');
       let receiptImg = document.createElement('img');
-      receiptImg.setAttribute('src', `${URL}/${reimbursement.id}/receipt`);
+      receiptImg.setAttribute('src', `${prefixURL}/${reimbursement.id}/receipt`);
       receiptImg.style.height = '100px';
       td3.appendChild(receiptImg);
       
-      // let td4 = document.createElement('td');
-      // td4.innerText = reimbursement.remitSubmitted;
+      let td4 = document.createElement('td');
+      td4.innerText = reimbursement.remitSubmitted;
       
-      // let td5 = document.createElement('td');
-      // td5.innerText = reimbursement.remitResolved;
+      let td5 = document.createElement('td');
+      td5.innerText = (reimbursement.remitResolved? reimbursement.remitResolved : "Pending review");
       
       let td6 = document.createElement('td');
       td6.innerText = reimbursement.remitDescription;
@@ -73,15 +90,13 @@ async function populateTable() {
       tr.appendChild(td1);
       tr.appendChild(td2);
       tr.appendChild(td3);
-      // tr.appendChild(td4);
-      // tr.appendChild(td5);
       tr.appendChild(td6);
       tr.appendChild(td7);
       tr.appendChild(td8);
+      tr.appendChild(td4);
+      tr.appendChild(td5);
       tr.appendChild(td9);
       tr.appendChild(td10);
-      
-      let userRole = localStorage.getItem('user_role')
       
       if(!reimbursement.managerUsername) {
         let statusInput = document.createElement('select');
@@ -111,7 +126,7 @@ async function populateTable() {
           let status = statusInput.value;
 
           try {
-            let res = await fetch(`${URL}/${reimbursement.id}?status=${status}`, {
+            let res = await fetch(`${prefixURL}/${reimbursement.id}?status=${status}`, {
               method: 'PATCH',
               headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
             });

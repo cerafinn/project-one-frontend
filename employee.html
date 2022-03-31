@@ -22,6 +22,15 @@
     <div class="container columns">
       <div class="column is-two-thirds reimbursements">
         <h2 class="title is-3">Reimbursement History</h2>
+        <div>
+          <label for="filter">Filter By Status</label>
+          <select id="filter" name="filter">
+            <option value="0" selected>All</option>
+            <option value="1">Pending</option>
+            <option value="2">Approved</option>
+            <option value="3">Denied</option>
+          </select>
+        </div>
         <table id="e-reimb-table" class="table is-hoverable">
           <thead>
             <th>Id</th>
@@ -74,6 +83,7 @@
       </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./assets/js/employee.js"></script>
     <script src="./assets/js/logout.js"></script>
 </body>

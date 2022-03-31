@@ -19,6 +19,8 @@ submitReimbursement.addEventListener('click', async () => {
   formData.append('remitType', reimbType);
   formData.append('receipt', reimbReceipt);
 
+  // add filtering
+
   try {
     let res = await fetch(URL, {
       method: 'POST',
@@ -30,9 +32,25 @@ submitReimbursement.addEventListener('click', async () => {
   }
 
   populateTable();
-})
+});
+
+let filter = document.querySelector('#filter');
+filter.addEventListener('change', (event) => {
+  populateTable();
+});
 
 async function populateTable() {
+  let filterValue = filter.value;
+  console.log(filterValue);
+
+  if (filterValue == 0) {
+    URL = prefixURL;
+  } else if (filterValue !== 0) {
+    URL = prefixURL + '?status=' + filterValue;
+  } else {
+    URL = prefixURL;
+  }
+
   let res = await fetch(URL, {
     method: 'GET',
     headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}`} 
@@ -77,8 +95,8 @@ async function populateTable() {
       tr.appendChild(td5);
       tr.appendChild(td6);
       tr.appendChild(td7);
-      tr.appendChild(td3);
-      tr.appendChild(td4);
+      // tr.appendChild(td3);
+      // tr.appendChild(td4);
       tr.appendChild(td8);
       tr.appendChild(td9);
 

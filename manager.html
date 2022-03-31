@@ -22,6 +22,15 @@
   <!-- table with all reimbursements -->
   <div class="reimbursements">
     <h2 class="title is-3">Reimbursements</h2>
+    <div>
+      <label for="filter">Filter By Status</label>
+      <select id="filter" name="filter">
+        <option value="0" selected>All</option>
+        <option value="1">Pending</option>
+        <option value="2">Approved</option>
+        <option value="3">Denied</option>
+      </select>
+    </div>
     <table id="reimb-table" class="table is-hoverable">
       <thead>
         <th>Id</th>
@@ -30,8 +39,8 @@
         <th>Description</th>
         <th>Type</th>
         <th>Status</th>
-        <!-- <th>Submitted On</th>
-        <th>Resolved On</th> -->
+        <th>Submitted On</th>
+        <th>Resolved On</th>
         <th>Employee</th>
         <th>Manager</th>
       </thead>
@@ -41,6 +50,7 @@
     </table>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./assets/js/manager.js"></script>
   <script src="./assets/js/logout.js"></script>
 </body>
