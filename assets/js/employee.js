@@ -1,34 +1,32 @@
-const URL = `http://localhost:8081/users/${localStorage.getItem('user_id')}/reimbursements`;
+const prefixURL = `http://localhost:8081/users/${localStorage.getItem('user_id')}/reimbursements`;
 
 window.addEventListener('load', (event) => {
   populateTable();
 });
 
 let submitReimbursement = document.querySelector('#reimb-form-submit');
-
 submitReimbursement.addEventListener('click', async () => {
   let reimbAmount = document.querySelector('#reimb-form-amount').value;
   let reimbDescription = document.querySelector('#reimb-form-description').value;
   let reimbType = document.querySelector('#reimb-form-type').value;
   let reimbReceipt = document.querySelector('#reimb-form-receipt').files[0];
-
-
+  
   let formData = new FormData();
   formData.append('remitAmount', reimbAmount);
   formData.append('remitDescription', reimbDescription);
   formData.append('remitType', reimbType);
   formData.append('receipt', reimbReceipt);
 
-  // add filtering
-
   try {
-    let res = await fetch(URL, {
+    let res = await fetch(prefixURL, {
       method: 'POST',
       body: formData,
       headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
     })
+    alert('Reimbursement submitted');
   } catch (e) {
     console.log(e);
+    alert('Reimbursement failed to submit');
   }
 
   populateTable();
@@ -59,6 +57,7 @@ async function populateTable() {
   if (res.status === 200) {
     let reimbursements = await res.json();
     let tbody = document.querySelector('#e-reimb-table > tbody');
+    tbody.innerHTML = '';
 
     for (let reimbursement of reimbursements) {
       let tr = document.createElement('tr');

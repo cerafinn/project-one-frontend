@@ -33,6 +33,7 @@ header nav ul {
   justify-content: space-between;
   align-items: center;
   list-style: none;
+  margin-top: 20px;
 }
 
 header nav ul li a {
@@ -101,4 +102,9 @@ header nav ul li a:hover {
   font-size: 16px;
   border-radius: 10px;
   float: right;
+}
+
+.form-input button:hover {
+  color: var(--tertiary);
+  background-color: var(--primary);
 }
