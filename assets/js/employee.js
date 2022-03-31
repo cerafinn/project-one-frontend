@@ -7,10 +7,10 @@ window.addEventListener('load', (event) => {
 let submitReimbursement = document.querySelector('#reimb-form-submit');
 
 submitReimbursement.addEventListener('click', async () => {
-  let reimbAmount = document.querySelector('#reimb-form-amount');
-  let reimbDescription = document.querySelector('#reimb-form-description');
-  let reimbType = document.querySelector('#reimb-form-type');
-  let reimbReceipt = document.querySelector('reimb-form-receipt');
+  let reimbAmount = document.querySelector('#reimb-form-amount').value;
+  let reimbDescription = document.querySelector('#reimb-form-description').value;
+  let reimbType = document.querySelector('#reimb-form-type').value;
+  let reimbReceipt = document.querySelector('#reimb-form-receipt').files[0];
 
 
   let formData = new FormData();
@@ -28,6 +28,8 @@ submitReimbursement.addEventListener('click', async () => {
   } catch (e) {
     console.log(e);
   }
+
+  populateTable();
 })
 
 async function populateTable() {
@@ -49,11 +51,11 @@ async function populateTable() {
       let td2 = document.createElement('td');
       td2.innerText = reimbursement.remitAmount;
 
-      // let td3 = document.createElement('td');
-      // td3.innerText = reimbursement.remitSubmitted;
+      let td3 = document.createElement('td');
+      td3.innerText = reimbursement.remitSubmitted;
 
-      // let td4 = document.createElement('td');
-      // td4.innerText = reimbursement.remitResolved;
+      let td4 = document.createElement('td');
+      td4.innerText = reimbursement.remitResolved;
 
       let td5 = document.createElement('td');
       td5.innerText = reimbursement.remitDescription;
@@ -65,18 +67,18 @@ async function populateTable() {
       td7.innerText = (reimbursement.status);
       
       let td8 = document.createElement('td');
-      td9.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
+      td8.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
       
       let td9 = document.createElement('td');    
-      td10.innerText = (reimbursement.managerUsername ? (reimbursement.managerFirstName + " " +reimbursement.managerLastName) : "Not reviewed");
+      td9.innerText = (reimbursement.managerUsername ? (reimbursement.managerFirstName + " " +reimbursement.managerLastName) : "Not reviewed");
 
       tr.appendChild(td1);
       tr.appendChild(td2);
-      // tr.appendChild(td3);
-      // tr.appendChild(td4);
       tr.appendChild(td5);
       tr.appendChild(td6);
       tr.appendChild(td7);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
       tr.appendChild(td8);
       tr.appendChild(td9);
 
@@ -88,6 +90,7 @@ async function populateTable() {
       tr.appendChild(td10);
 
       tbody.appendChild(tr);
+      console.log(reimbursement)
     }
   }
 }
