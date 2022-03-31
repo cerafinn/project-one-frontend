@@ -70,10 +70,15 @@ async function populateTable() {
       td2.innerText = reimbursement.remitAmount;
 
       let td3 = document.createElement('td');
-      td3.innerText = reimbursement.remitSubmitted;
+      let formatSubmitted = moment(reimbursement.remitSubmitted).format('hh:mm A YYYY-MM-DD');
+      td3.innerText = formatSubmitted;
 
       let td4 = document.createElement('td');
-      td4.innerText = reimbursement.remitResolved;
+      let formatResolved;
+      if (reimbursement.remitResolved !== null) {
+        formatResolved = moment(reimbursement.remitResolved).format('hh:mm A YYYY-MM-DD');
+      };
+      td4.innerText = (reimbursement.remitResolved ? formatResolved : "Pending review");
 
       let td5 = document.createElement('td');
       td5.innerText = reimbursement.remitDescription;
@@ -95,8 +100,8 @@ async function populateTable() {
       tr.appendChild(td5);
       tr.appendChild(td6);
       tr.appendChild(td7);
-      // tr.appendChild(td3);
-      // tr.appendChild(td4);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
       tr.appendChild(td8);
       tr.appendChild(td9);
 

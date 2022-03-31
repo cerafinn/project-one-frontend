@@ -12,7 +12,6 @@ filter.addEventListener('change', (event) => {
 
 async function populateTable() {
   let filterValue = filter.value;
-  console.log(filterValue);
 
   if (filterValue == 0) {
     URL = prefixURL;
@@ -42,50 +41,55 @@ async function populateTable() {
       td2.innerText = reimbursement.remitAmount;
       
       let td3 = document.createElement('td');
-      let receiptImg = document.createElement('img');
-      receiptImg.setAttribute('src', `${prefixURL}/${reimbursement.id}/receipt`);
-      receiptImg.style.height = '100px';
-      td3.appendChild(receiptImg);
-      
+      let formatSubmitted = moment(reimbursement.remitSubmitted).format('hh:mm A YYYY-MM-DD');
+      td3.innerText = formatSubmitted;
+
       let td4 = document.createElement('td');
-      td4.innerText = reimbursement.remitSubmitted;
+      let formatResolved;
+      if (reimbursement.remitResolved !== null) {
+        formatResolved = moment(reimbursement.remitResolved).format('hh:mm A YYYY-MM-DD');
+      };
+      td4.innerText = (reimbursement.remitResolved ? formatResolved : "Pending review");
       
       let td5 = document.createElement('td');
-      td5.innerText = (reimbursement.remitResolved? reimbursement.remitResolved : "Pending review");
+      td5.innerText = reimbursement.remitDescription;
       
       let td6 = document.createElement('td');
-      td6.innerText = reimbursement.remitDescription;
+      if(reimbursement.status == 1) {
+        td6.innerText = "Lodging";
+      } else if(reimbursement.status == 2) {
+        td6.innerText = "Travel";
+      } else if(reimbursement.status == 3) {
+        td6.innerText = "Food";
+      } else if(reimbursement.status == 4) {
+        td6.innerText = "Other";
+      } else {
+        td6.innerText = "Type of reimbursement not defined";
+      }
       
       let td7 = document.createElement('td');
       if(reimbursement.status == 1) {
-        td7.innerText = "Lodging";
+          td7.innerText = "Pending";
       } else if(reimbursement.status == 2) {
-        td7.innerText = "Travel";
+        td7.innerText = "Approved";
       } else if(reimbursement.status == 3) {
-        td7.innerText = "Food";
-      } else if(reimbursement.status == 4) {
-        td7.innerText = "Other";
+        td7.innerText = "Denied";
       } else {
-        td7.innerText = "Type of reimbursement not defined";
-      }
-      
-      let td8 = document.createElement('td');
-      if(reimbursement.status == 1) {
-          td8.innerText = "Pending";
-      } else if(reimbursement.status == 2) {
-        td8.innerText = "Approved";
-      } else if(reimbursement.status == 3) {
-        td8.innerText = "Denied";
-      } else {
-        td8.innerText = "Status not defined";
+        td7.innerText = "Status not defined";
       }
       // td8.innerText = (reimbursement.status);
       
-      let td9 = document.createElement('td');
-      td9.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
+      let td8 = document.createElement('td');
+      td8.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
       
-      let td10 = document.createElement('td');    
-      td10.innerText = (reimbursement.managerUsername ? (reimbursement.managerFirstName + " " +reimbursement.managerLastName) : "Not reviewed");
+      let td9 = document.createElement('td');    
+      td9.innerText = (reimbursement.managerUsername ? (reimbursement.managerFirstName + " " +reimbursement.managerLastName) : "Not reviewed");
+
+      let td10 = document.createElement('td');
+      let receiptImg = document.createElement('img');
+      receiptImg.setAttribute('src', `${prefixURL}/${reimbursement.id}/receipt`);
+      receiptImg.style.height = '100px';
+      td10.appendChild(receiptImg);
 
       tr.appendChild(td1);
       tr.appendChild(td2);
