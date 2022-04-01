@@ -68,7 +68,7 @@ async function populateTable() {
 
       let td3 = document.createElement('td');
       let formatSubmitted = moment(reimbursement.remitSubmitted).format('hh:mm A YYYY-MM-DD');
-      td3.innerText = reimbursement.remitSubmitted;
+      td3.innerText = remitSubmitted;
 
       let td4 = document.createElement('td');
       let formatResolved;
@@ -94,7 +94,15 @@ async function populateTable() {
       }
 
       let td7 = document.createElement('td');
-      td7.innerText = (reimbursement.status);
+      if(reimbursement.status == 1) {
+        td7.innerText = "Pending";
+      } else if(reimbursement.status == 2) {
+        td7.innerText = "Approved";
+      } else if(reimbursement.status == 3) {
+        td7.innerText = "Denied";
+      } else {
+        td7.innerText = "Status not defined";
+      }
       
       let td8 = document.createElement('td');
       td8.innerText = (reimbursement.employeeFirstName + " " + reimbursement.employeeLastName);
