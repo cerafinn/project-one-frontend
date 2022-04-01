@@ -4,7 +4,8 @@ window.addEventListener('load', (event) => {
   populateTable();
 });
 
-let submitReimbursement = document.querySelector('#reimb-form-submit');
+let submitReimbursement = document.querySelector('#reimb-submit');
+
 submitReimbursement.addEventListener('click', async () => {
   let reimbAmount = document.querySelector('#reimb-form-amount').value;
   let reimbDescription = document.querySelector('#reimb-form-description').value;
@@ -18,18 +19,15 @@ submitReimbursement.addEventListener('click', async () => {
   formData.append('receipt', reimbReceipt);
 
   try {
-    let res = await fetch(prefixURL, {
+    let res = await fetch(`http://localhost:8081/users/${localStorage.getItem('user_id')}/reimbursements`, {
       method: 'POST',
       body: formData,
       headers: {'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
     })
-    alert('Reimbursement submitted');
+    populateTable();
   } catch (e) {
     console.log(e);
-    alert('Reimbursement failed to submit');
   }
-
-  populateTable();
 });
 
 let filter = document.querySelector('#filter');
@@ -70,7 +68,7 @@ async function populateTable() {
 
       let td3 = document.createElement('td');
       let formatSubmitted = moment(reimbursement.remitSubmitted).format('hh:mm A YYYY-MM-DD');
-      td3.innerText = formatSubmitted;
+      td3.innerText = reimbursement.remitSubmitted;
 
       let td4 = document.createElement('td');
       let formatResolved;
@@ -83,7 +81,17 @@ async function populateTable() {
       td5.innerText = reimbursement.remitDescription;
 
       let td6 = document.createElement('td');
-      td6.innerText = reimbursement.type;
+      if(reimbursement.status == 1) {
+        td6.innerText = "Lodging";
+      } else if(reimbursement.status == 2) {
+        td6.innerText = "Travel";
+      } else if(reimbursement.status == 3) {
+        td6.innerText = "Food";
+      } else if(reimbursement.status == 4) {
+        td6.innerText = "Other";
+      } else {
+        td6.innerText = "Type of reimbursement not defined";
+      }
 
       let td7 = document.createElement('td');
       td7.innerText = (reimbursement.status);
@@ -99,8 +107,8 @@ async function populateTable() {
       tr.appendChild(td5);
       tr.appendChild(td6);
       tr.appendChild(td7);
-      tr.appendChild(td3);
-      tr.appendChild(td4);
+      // tr.appendChild(td3);
+      // tr.appendChild(td4);
       tr.appendChild(td8);
       tr.appendChild(td9);
 
@@ -112,7 +120,6 @@ async function populateTable() {
       tr.appendChild(td10);
 
       tbody.appendChild(tr);
-      console.log(reimbursement)
     }
   }
 }
